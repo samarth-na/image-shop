@@ -6,15 +6,11 @@ For an image-processing UI that covers all those operations, use simple defaults
 
 - **Upload zone** (drag & drop + browse)
 - **File list/queue** (name, size, type, dimensions, status)
-- **Bulk select** + remove/reorder
-- Optional: **batch mode toggle** (“Apply same settings to all”)
 
 ## 2) Live Preview Area
 
-- **Before / After preview** (split slider or side-by-side)
-- **Zoom controls** (fit, 100%, pan)
+- **Before / After preview** (switch view)
 - **Metadata display** (dimensions, format, size)
-- **Estimated output size** + % reduction
 
 ## 3) Format Conversion Panel
 
@@ -61,17 +57,7 @@ For an image-processing UI that covers all those operations, use simple defaults
 
 ## Quality-of-life UX elements (recommended)
 
-- **Presets** (“Web optimized”, “Avatar 1:1”, “High quality print”)
 - **Reset section / reset all**
-- **Undo/redo** for edit operations
-- **Operation order timeline** (resize → crop → compress)
 - **Validation messages** (“Width required”, “PNG lossless only”, etc.)
-- **Keyboard shortcuts** (crop, zoom, rotate)
-- **History of recent settings**
 
 ## Suggested layout
-
-- **Left:** operation panels (accordion/tabs)
-- **Center:** preview canvas
-- **Right/top:** output summary (final format, dimensions, estimated size)
-- **Bottom:** queue + export progress
