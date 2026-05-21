@@ -88,9 +88,9 @@ export async function POST(request: Request): Promise<Response> {
       files.push({ imageId: image.id, fileName, bytes: result.bytes });
     }
 
-    const archiveBuffer = await zip.generateAsync({ type: "uint8array" });
+    const archiveBuffer = await zip.generateAsync({ type: "arraybuffer" });
 
-    return new Response(archiveBuffer as unknown as BodyInit, {
+    return new Response(archiveBuffer, {
       status: 200,
       headers: {
         "Content-Type": "application/zip",

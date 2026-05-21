@@ -1,12 +1,15 @@
 # AGENTS.md
 
-- This repo uses Next.js 16.2.3 with App Router; check `node_modules/next/dist/docs/` if framework behavior seems off.
+- Repo: single Next.js 16.2.3 App Router app at the repo root.
+- Main UI entrypoint is `app/page.tsx`; root shell is `app/layout.tsx`.
 - `reactCompiler: true` is enabled in `next.config.ts`.
-- `npm run lint` runs `biome check`; `npm run format` runs `biome format --write`; `npm run build` is the production verification. There is no `test` script.
-- Biome is the repo formatter/linter, with 2-space indentation and organize-imports enabled.
-- The app is a single Next.js app at the repo root; the main UI entrypoints are `app/page.tsx` and `app/ui/page.tsx`.
-- Image workflow routes are split by concern: `app/api/images/inspect`, `preview`, `estimate`, `process`, and `export`.
-- Uploaded files are written under `.image-shop-data/inputs`, and file metadata is cached in-memory in `lib/backend/storage.ts`; a restart clears that cache.
-- Shared image transform logic lives in `lib/backend/image-pipeline.ts`; request schemas in `lib/backend/schemas.ts`; shared error handling in `lib/backend/errors.ts`; shared types in `lib/backend/types.ts`.
-- Presets are handled by `app/api/presets/route.ts` and `app/api/presets/[presetId]/route.ts`, with persistence in `lib/backend/presets.ts`.
-- Recent settings persistence lives in `lib/backend/recent-settings.ts`.
+- Use `bun run dev`, `bun run build`, `bun run lint`, and `bun run format`.
+- `bun run lint` runs `biome check`; `bun run format` runs `biome format --write`.
+- Biome is the formatter/linter here, with 2-space indentation and organize-imports enabled.
+- There is no `test` script.
+- Image workflow API routes live under `app/api/images/*`; presets are in `app/api/presets/*`; recent settings are in `app/api/recent-settings`; health is `app/api/health`.
+- Shared backend logic lives in `lib/backend/image-pipeline.ts`, `schemas.ts`, `errors.ts`, `types.ts`, `presets.ts`, `recent-settings.ts`, and `storage.ts`.
+- Uploaded files are written to `.image-shop-data/inputs`.
+- File metadata is cached in memory in `lib/backend/storage.ts`; restart clears that cache.
+- If Next behavior seems off, check the installed docs in `node_modules/next/dist/docs/`.
+- For UI/design work, follow the project design context in `.github/copilot-instructions.md`.
