@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Image Shop
 
-## Getting Started
+A full-stack image editor that processes files locally: upload a batch, resize, crop, rotate, convert, compress, and export as a ZIP.
 
-First, run the development server:
+No account, no cloud storage, and no external processing service — `sharp` does the work on the server that runs the app.
+
+## Features
+
+- Drag-and-drop upload queue with before/after preview and estimated output size.
+- Resize by dimensions, percentage, or presets (thumbnail 200px, social 1200×630, HD 1920) with four fit modes.
+- Crop to 1:1, 4:3, 16:9, or freeform, with numeric inputs.
+- Rotate by ±90° or a custom angle, flip, flop, and EXIF auto-orientation.
+- Convert to JPEG, PNG, WebP, or AVIF with automatic quality settings (52/78/82) and lossy/lossless control.
+- Built-in presets (`web-optimized`, `avatar-1-1`) plus recent settings.
+- ZIP export with a configurable naming pattern.
+
+## Tech stack
+
+- Next.js 16.2.3 (App Router), React 19.2.4, TypeScript 5
+- `sharp` 0.34.4 for processing, JSZip 3.10.1 for export, Zod 4.1.12 for validation
+- Radix UI and shadcn/ui, Tailwind CSS 4, next-themes, sonner
+- Biome for lint and format; Bun as the package manager
+
+## Requirements
+
+- Bun 1.3 or newer
+- No environment variables or external services are required. Uploads are written under `.image-shop-data/inputs`.
+
+## Quick start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun install
+bun run dev
+# http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Command | Purpose |
+| --- | --- |
+| `bun run dev` | Start the development server |
+| `bun run build` | Production build |
+| `bun run start` | Start the production server |
+| `bun run lint` | Biome check |
+| `bun run format` | Biome format and write |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+There is no test script yet.
 
-## Learn More
+## API
 
-To learn more about Next.js, take a look at the following resources:
+Nine routes back the UI:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Route | Purpose |
+| --- | --- |
+| `GET /api/health` | Service status |
+| `POST /api/images/inspect` | Read image metadata |
+| `POST /api/images/estimate` | Estimate output size |
+| `POST /api/images/preview` | Generate a before/after preview |
+| `POST /api/images/process` | Apply the selected operations |
+| `POST /api/images/export` | Package results into a ZIP |
+| `GET /api/presets` | List presets |
+| `GET /api/presets/[presetId]` | Get one preset |
+| `GET /api/recent-settings` | Load recent settings |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+All request bodies are validated with Zod. The schema also allows `folder` and `cloud` export destinations, but only `zip` is implemented; the others return `destination_not_implemented`.
 
-## Deploy on Vercel
+## Status and contributions
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This repository has no license and no CONTRIBUTING guide, and issues are not an active contribution channel. Treat it as a portfolio project rather than an open one. If you want outside contributions, add a `LICENSE`, a short CONTRIBUTING file, and tests around the processing pipeline.
